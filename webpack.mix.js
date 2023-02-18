@@ -1,26 +1,29 @@
-const mix = require('laravel-mix');
+const { join, resolve } = require('path')
+const mix = require('laravel-mix')
+require('laravel-mix-versionhash')
 
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+mix.js('resources/js/app.js', 'public/js').vue({extractStyles: false})
+   .sass('resources/sass/app.scss', 'public/css')
+   .disableNotifications()
 
-const webpackConfig = {
-    plugins: [
-      new VuetifyLoaderPlugin(),
-      new CaseSensitivePathsPlugin()
-    ]
+if (mix.inProduction()) {
+	mix.versionHash()
+} else {
+	mix.sourceMaps()
 }
-mix.webpackConfig( webpackConfig );
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+mix.webpackConfig({
+	plugins: [
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+	],
+	resolve: {
+		extensions: ['.js', '.json', '.vue'],
+		alias: {
+			'~': join(__dirname, './resources/js')
+		}
+	},
+	output: {
+		chunkFilename: 'js/[chunkhash].js',
+		path: resolve(__dirname, './public')
+	}
+})

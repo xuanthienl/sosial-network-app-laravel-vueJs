@@ -1,5 +1,6 @@
 require('./bootstrap');
-window.Vue = require('vue');
+//window.Vue = require('vue');
+import Vue from 'vue'
 
 //axios
 import axios from 'axios';
@@ -48,3 +49,12 @@ const app = new Vue({
 // - Run npm run dev (lệnh này tạo ra 2 forder css and js trong /public của Laravel)
 // - Chú ý: use npm i vuetify-loader@1.4.3
 // Key path "file:///app/storage/oauth-public.key" does not exist or is not readable: Run heroku ps:exec -a your_app_name -> Run php artisan passport:keys
+
+// RUN SOURCE (PHP 8.0.18 - NODEJS 16.17.0)
+// - composer update
+// - php artisan passport:keys
+// - php artisan migrate
+// - php artisan passport:install
+// - php artisan db:seed
+// - npm install
+// - npm run dev
